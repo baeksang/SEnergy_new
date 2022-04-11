@@ -9,18 +9,14 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
-        integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
-        crossorigin="anonymous" /> --}}
-
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    {{-- <link href="{{ mix('css/app.css') }}" rel="stylesheet"> --}}
+    <link href="{{ mix('css/admin-lte.css') }}" rel="stylesheet">
 
 </head>
 
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            {{-- <a href="{{ url('/home') }}"><b>{{ config('app.name') }}</b></a> --}}
             <a href="{{ route('login') }}" style="color: white; font-size: 50px"><b>Scope</b>Energy</a>
         </div>
         <!-- /.login-logo -->
@@ -28,11 +24,8 @@
         <!-- /.login-box-body -->
         <div class="card">
             <div class="card-body login-card-body">
-                {{-- <p class="login-box-msg">Sign in to start your session</p> --}}
-                <p class="login-box-msg">로그인 하시기 바랍니다. </p>
-
+                <p class="login-box-msg">@lang('public.LoginTitle')</p>
                 {{-- Language selection area --}}
-
                 <ul class="navbar-nav ml-auto flex-nowrap login-box-msg">
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown role=" button"
@@ -79,10 +72,7 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
-
                     </div>
-
-
                     <div class="input-group mb-3">
                         <input type="password" name="password" placeholder="Password"
                             class="form-control @error('password') is-invalid @enderror">
@@ -94,9 +84,7 @@
                         @error('password')
                             <span class="error invalid-feedback">{{ $message }}</span>
                         @enderror
-
                     </div>
-
                     <div class="row">
                         <div class="col-8">
                             <div class="icheck-primary">
@@ -104,14 +92,11 @@
                                 <label for="remember">Remember Me</label>
                             </div>
                         </div>
-
                         <div class="col-4">
                             <button type="submit" class="btn btn-primary btn-block">Sign In</button>
                         </div>
-
                     </div>
                 </form>
-
                 <p class="mb-1">
                     <a href="{{ route('password.request') }}">I forgot my password</a>
                 </p>
@@ -121,11 +106,12 @@
             </div>
             <!-- /.login-card-body -->
         </div>
-
     </div>
     <!-- /.login-box -->
-
-    <script src="{{ mix('js/app.js') }}" defer></script>
+    {{-- <script src="{{ mix('/js/manifest.js') }}" charset="utf-8"></script>
+    <script src="{{ mix('/js/vendor.js') }}" charset="utf-8"></script> --}}
+    <script src="{{ mix('/js/admin-lte.js') }}" charset="utf-8"></script>
+    {{-- <script src="{{ mix('js/app.js') }}" defer></script> --}}
 
 </body>
 

@@ -1,3 +1,4 @@
-require('./bootstrap');
-require('admin-lte');
-require('./adminlte_plugin');
+// require('./bootstrap')
+// require('./adminlte_plugin')
+require('admin-lte/plugins/jquery/jquery')
+require('admin-lte/plugins/bootstrap/js/bootstrap.bundle')

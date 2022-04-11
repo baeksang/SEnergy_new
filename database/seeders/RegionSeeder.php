@@ -20,6 +20,8 @@ class RegionSeeder extends Seeder
         Region::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
+        DB::table('region_user')->truncate();
+
         $regions = array();
         $region = [];
 
@@ -42,9 +44,8 @@ class RegionSeeder extends Seeder
         $regions[16]    = [ 'region_code' => 'KR-49', 'region_code2' => 'JJ', 'region_name'=>'제주도',      'lat'=>'35.8203294', 'lng'=>'127.1087840', 'country_code' => 'KR', 'country_name' => '대한민국'    ];
         $regions[17]    = [ 'region_code' => 'KR-50', 'region_code2' => 'SJ', 'region_name'=>'세종시',      'lat'=>'35.8203294', 'lng'=>'127.1087840', 'country_code' => 'KR', 'country_name' => '대한민국'    ];
 
-        $chunks = array_chunk($regions, 100);
-        foreach($chunks as $chunk){
-            Region::insert($chunk);
+        foreach($regions as $region){
+            Region::create($region);
         }
     }
 }

@@ -91,6 +91,18 @@ return [
             'prefix_indexes' => true,
         ],
 
+        'elasticsearch' => [
+            // 'hosts' => [env('ELASTICSEARCH_HOST', '172.20.20.81','172.20.20.152','172.20.20.176')],
+            // 'ports' => env('ELASTICSEARCH_HOST', '9201', '9202'),
+            'hosts' => [env('ELASTICSEARCH_HOST', 'localhost')],
+            'ports' => env('ELASTICSEARCH_PORT', '9200' ),
+        ],
+
+        'graphql' => [
+            'host' => [env('GRAPHQL_HOST', 'localhost')],
+            'port' => env('GRAPHQL_PORT', '3200'),
+        ]
+
     ],
 
     /*

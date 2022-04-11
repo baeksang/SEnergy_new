@@ -16,12 +16,12 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory(10)->create();
-        // $this->call(SitesTableSeeder::class);
-        // $this->call(AccessesTableSeeder::class);
+        $this->call(SiteSeeder::class);
+        $this->call(AccessSeeder::class);
         $this->call(RoleSeeder::class);
-        // $this->call(LevelsTableSeeder::class);
+        $this->call(LevelSeeder::class);
         $this->call(RegionSeeder::class);
-        // $this->call(UsersTableSeeder::class);
+        $this->call(UserSeeder::class);
         // $this->call(MCsTableSeeder::class);
         // $this->call(SwitchgearsTableSeeder::class);
         // $this->call(InvertersTableSeeder::class);

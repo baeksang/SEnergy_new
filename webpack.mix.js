@@ -1,5 +1,4 @@
-const mix = require('laravel-mix');
-
+const mix = require('laravel-mix')
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -11,9 +10,53 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
+mix.autoload({
+    jquery: ['$', 'jQuery', 'jquery', 'window.jQuery']
+})
+
+mix.js('resources/js/admin-lte.js', 'public/js')
     .js('resources/js/auth.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css')
-    .autoload({
-        jquery: ['$', 'jQuery', 'window.jQuery'],
-    });
+    .js('resources/js/userIndex.js', 'public/js')
+    .js('resources/js/user.js', 'public/js')
+    .sass('resources/sass/admin-lte.scss', 'public/css')
+
+// mix.js('resources/assets/js/auth.js', 'public/js').sass(
+//     'resources/assets/sass/auth.scss',
+//     'public/css'
+// )
+
+mix.extract(
+    [
+        // 'admin-lte',
+
+        // 'axios',
+        // 'bootstrap-sass',
+        // 'fastclick',
+        'jquery',
+        'bootstrap',
+        // 'jquery-slimscroll',
+        'lodash'
+        // 'vue'
+    ],
+    'public/js/vendor.js'
+)
+
+mix.version()
+
+mix.setPublicPath('public')
+
+// mix.js('resources/js/app.js', 'public/js')
+//     .js('resources/js/auth.js', 'public/js')
+//     .js('resources/js/userIndex.js', 'public/js')
+//     .js('resources/js/user.js', 'public/js')
+//     .sass('resources/sass/app.scss', 'public/css')
+//     .autoload({})
+
+// mix.js('resources/js/app.js', 'public/js')
+//     .js('resources/js/auth.js', 'public/js')
+//     .js('resources/js/userIndex.js', 'public/js')
+//     .js('resources/js/user.js', 'public/js')
+//     .sass('resources/sass/app.scss', 'public/css')
+//     .autoload({
+//         jquery: ['$', 'jQuery', 'window.jQuery']
+//     })

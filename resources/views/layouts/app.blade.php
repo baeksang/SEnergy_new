@@ -5,12 +5,9 @@
     <meta charset="UTF-8">
     <title>{{ config('app.name') }}</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <link href="{{ mix('css/admin-lte.css') }}" rel="stylesheet">
+    {{-- <link href="{{ mix('css/app.css') }}" rel="stylesheet"> --}}
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
-        integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
-        crossorigin="anonymous" />
-
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
     @yield('third_party_stylesheets')
 
@@ -38,12 +35,13 @@
         </div>
     </div>
 
+    @section('scripts')
+        {{-- <script src="{{ mix('js/app.js') }}"></script> --}}
+        <script src="{{ mix('/js/manifest.js') }}" charset="utf-8"></script>
+        <script src="{{ mix('/js/vendor.js') }}" charset="utf-8"></script>
+        @yield('third_party_scripts')
+        <script src="{{ mix('js/admin-lte.js') }}"></script>
+        @stack('page_scripts')
+    </body>
 
-    <script src="{{ mix('js/app.js') }}" defer></script>
-
-    @yield('third_party_scripts')
-
-    @stack('page_scripts')
-</body>
-
-</html>
+    </html>

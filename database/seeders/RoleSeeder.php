@@ -21,6 +21,8 @@ class RoleSeeder extends Seeder
         Role::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
+        DB::table('role_user')->truncate();
+
         $roles = array();
         $role = [];
 
@@ -30,9 +32,8 @@ class RoleSeeder extends Seeder
         $roles[3]   = [ 'name' => 'operator',         'control_by'=>'manager', ];
         $roles[4]   = [ 'name' => 'user',             'control_by'=>'admin',   ];
 
-        $chunks = array_chunk($roles, 100);
-        foreach($chunks as $chunk){
-            Role::insert($chunk);
+        foreach($roles as $role){
+            Role::create($role);
         }
     }
 }
