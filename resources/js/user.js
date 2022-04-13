@@ -1,49 +1,15 @@
 'use strict'
 
-// require('./admin-lte')
-// // require('./adminlte_plugin')
-
-// require('admin-lte/plugins/bootstrap/js/bootstrap')
-// require('admin-lte/plugins/select2/js/select2.js')
-// require('admin-lte/plugins/bootstrap-switch/js/bootstrap-switch.js')
-// require('admin-lte/plugins/datatables/jquery.dataTables.min.js')
-// require('admin-lte/plugins/datatables-responsive/js/dataTables.responsive.js')
+const { reset } = require("laravel-mix/src/Log")
 
 $(document).ready(function () {
-    $('#userSitesTable').DataTable({
-        responsive: true,
-        columnDefs: [
-            { responsivePriority: 1, targets: 0 },
-            { responsivePriority: 1, targets: 1 },
-            { targets: [2, 3, 4], className: 'dt-body-right' }
-        ],
-        lengthChange: false,
-        autoWidth: false,
-        ordering: true,
-        searching: false,
-        paging: false
-    })
 
-    $('#userEditTable').DataTable({
-        responsive: true,
-        lengthChange: false,
-        autoWidth: false,
-        ordering: true
-    })
+    resetUserSitesTable()
+    resetUserEditTable()
+    resetRole()
+    resetLevel()
+    resetRegion()
 
-    $('.select2_role').select2({
-        maximumSelectionLength: 1,
-        width: '100%'
-    })
-
-    $('.select2_level').select2({
-        maximumSelectionLength: 1,
-        width: '100%'
-    })
-
-    $('.select2_region').select2({
-        width: '100%'
-    })
 
     $('input[data-bootstrap-switch-1]').bootstrapSwitch()
     if (user.approved != 0) {
@@ -669,15 +635,85 @@ $(document).ready(function () {
     // document.getElementById('editUser').addEventListener('click', function (e) {
     //     editUser()
     // })
+})
 
-    $(document).on('click', '.modalCloseBtn', function (e) {
-        $('#modal-lg').modal('hide')
-    })
+$(document).on('click', '.modalCloseBtn', function (e) {
+    $('#modal-lg').modal('hide')
+})
 
-    $(document).on('click', '#editUser', function (e) {
-        $('#modal-lg').modal('show')
-        initializeModalPage()
-    })
+$(document).on('click', '#editUser', function (e) {
+    $('#modal-lg').modal('show')
+    initializeModalPage()
+})
+
+$(document).on('change', '#select-role', function (e) {
+    // var selectedUserRegionid = $('#select-region option:selected').val()
+    // console.log(this.value)
+    var R_ACTIVATION = false;
+    if (this.value === '1') {
+        $('#select-level option[value="1"]')
+            .prop('selected', 'selected')
+            .change()
+        $('#select-region option[value="1"]')
+            .prop('selected', 'selected')
+            .change()
+        R_ACTIVATION = true
+    } else if (this.value === '2') {
+        // console.log(this.value)
+        // console.log('manager 입니다.')
+        $('#select-level option:selected').prop('selected', false)
+        $('#select-region option:selected').prop('selected', false)
+    } else if (this.value === '3') {
+        // console.log(this.value)
+    } else if (this.value === '4') {
+        // console.log(this.value)
+    } else if (this.value === '5') {
+        // console.log(this.value)
+        // console.log('user 입니다.')
+        R_ACTIVATION = true
+    } else {
+        resetLevel()
+        resetRegion()
+    }
+
+    $('#select-level').prop("disabled", R_ACTIVATION)
+    $('#select-region').prop("disabled", R_ACTIVATION)
+
+})
+
+$(document).on('change', '#select-level', function (e) {
+    var ACTIVATION = false
+    if (this.value === '1') {
+        $('#select-region option[value="1"]')
+        .prop('selected', 'selected')
+            .change()
+        ACTIVATION =  true
+    } else if (this.value === '2' || this.value === '3' ) {
+        $('#select-region option[value="1"]').prop('disabled',true);
+        ACTIVATION = false
+    } else if (this.value === "") {
+        resetRegion()
+    }
+    $('#select-region').prop("disabled", ACTIVATION)
+})
+
+
+$(document).on('change', '#select-region', function (e) {
+    var selectedLevel = $('#select-level option:selected').val()
+    var selectedRegion = $('.select2_region').select2("val");
+    if (selectedRegion.length != 0) {
+        if (selectedLevel === '3' && selectedRegion !== '1') {
+            document.getElementById("userAccess").style.display = "block"
+            if (selectedRegion != 'undefined' || selectedRegion != null) {
+                makeUserEditTable(selectedRegion)
+            } else {
+                document.getElementById("userAccess").style.display = "none"
+            }
+        }
+    } else {
+        $('#userEditTable tbody').children().remove();
+        document.getElementById("userAccess").style.display = "none"
+    }
 })
 
 function checkSelectedRole () {
@@ -687,28 +723,159 @@ function checkSelectedRole () {
 }
 
 function initializeModalPage () {
+    $('#select-role').val("")
+    $('#select-level').val("")
+    $('#select-region').val("")
     $('#select-role option[value=' + userRole['id'] + ']')
         .prop('selected', 'selected')
         .change()
-
     $('#select-level option[value=' + userLevel['id'] + ']')
         .prop('selected', 'selected')
         .change()
-
-    // userRegion.forEach
-    // $('#select-region option[value=' + userLevel['id'] + ']')
-    //     .prop('selected', 'selected')
-    //     .change()
-
-    console.log(userRegions)
-
     userRegions.forEach(function (item, index) {
         $('#select-region option[value=' + item.id + ']')
             .prop('selected', 'selected')
             .change()
-
-        // $('#select-level').append(
-        //     '<option value=' + item.id + '>' + item.name + '</option>'
-        // )
     })
 }
+
+function resetRole() {
+    $('.select2_role').val("").select2({
+        minimumSelectionLength: 1,
+        maximumSelectionLength: 1,
+        width: '100%'
+    })
+}
+
+function resetLevel () {
+    $('#select-level').val("").select2({
+        minimumSelectionLength: 1,
+        maximumSelectionLength: 1,
+        width: '100%'
+    })
+}
+
+function resetRegion() {
+    $('#select-region').val("").select2({
+        minimumSelectionLength: 1,
+        width: '100%'
+    })
+}
+function resetSelect2Access() {
+    $('.select2_access').select2({
+        minimumSelectionLength: 1,
+        width: '100%'
+    });
+}
+
+function resetUserSitesTable() {
+    $('#userSitesTable').DataTable({
+        responsive: true,
+        columnDefs: [
+            { responsivePriority: 1, targets: 0 },
+            { responsivePriority: 1, targets: 1 },
+            { targets: [2, 3, 4], className: 'dt-body-right' }
+        ],
+        lengthChange: false,
+        autoWidth: false,
+        ordering: true,
+        searching: false,
+        paging: false
+    })
+}
+
+function resetUserEditTable() {
+    $('#userEditTable').DataTable({
+        destroy: true,
+        responsive: true,
+        columnDefs: [
+            { responsivePriority: 1, targets: 0 },
+            { responsivePriority: 1, targets: 1 },
+            { targets: [2], className: 'dt-body-right' }
+        ],
+        lengthChange: false,
+        autoWidth: false,
+        ordering: true,
+        searching: false,
+        paging: false
+    })
+}
+
+function makeUserEditTable(data) {
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: "POST",
+        url: "/api/accessableSite",
+        data: {
+            region: data
+        },
+        success: function (data) {
+            console.log(data)
+            userEditTable(data)
+        },
+        error: function(data) {
+            alert("error");
+        },
+        complete: function(data) {
+            resetSelect2Access();
+
+
+        }
+    })
+}
+
+function userEditTable(data) {
+
+    /*
+     * 1. userEditTable tbody 를 새롭게 만든다.
+     */
+    // $("#userEditTable thead").children().remove();
+    $("#userEditTable tbody").children().remove();
+
+    data.forEach(function (item, index, array) {
+        var tr_obj0 = document.createElement("tr");
+        var td_obj1 = document.createElement("td");
+        var td_obj2 = document.createElement("td");
+        var td_obj3 = document.createElement("td");
+
+        td_obj1.innerHTML = item['site_name'];
+        td_obj2.innerHTML = item['region_name'];
+        let userAccessOption = '';
+        if(item['operation_type'] == "tracking"){
+            accesses.forEach(function(item,index) {
+                userAccessOption =  userAccessOption +  '<option value="'+ item.id +'">' + item.name + '</option>';
+            })
+        } else {
+            accesses.forEach(function (item, index) {
+                if (item.name != "control") {
+                    userAccessOption =  userAccessOption +  '<option value=" '+ item.id + ' ">' + item.name + '</option>';
+                }
+            })
+        }
+        td_obj3.className = 'project-state'
+        td_obj3.innerHTML = '<select name="accesses[' +
+                                                item.id +
+                                                '][]" id="select-access' + item
+                                                .id +
+                                                '" class="select2_access" multiple="multiple" data-placeholder="Select a Access Role" style="width: 100%;">' +
+                                                userAccessOption +
+                                                '</select>';
+
+            //td를 tr에 삽입 -> td를 tr의 자식요소로 만들어야한다.
+        tr_obj0.appendChild(td_obj1);
+        tr_obj0.appendChild(td_obj2);
+        tr_obj0.appendChild(td_obj3);
+
+        //원하는 테이블의 원하는 장소에 자식요소로 만들기.
+        var table = document.getElementById("userEditTable"); //테이블의 아이디를 이용
+
+        //3번째 자식 요소를 얻어내서 추가해야한다.(tbody를 2번째로 만들어 놓음)
+        var tbody = table.children[1];
+        //여기에 값넣기.
+        tbody.appendChild(tr_obj0);
+    })
+}
+

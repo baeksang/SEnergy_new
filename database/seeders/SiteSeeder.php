@@ -34,6 +34,7 @@ class SiteSeeder extends Seeder
             'completemonth' => '5',
             'completeday' => '13',
             'capacity'=> '27.56',
+            'initialDate' => '2021-06-10',
             'no_mastercontroller'=> '1',
             'no_inverter'=> '2',
             'lat'=> '37.1723073',

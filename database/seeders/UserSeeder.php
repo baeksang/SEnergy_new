@@ -97,25 +97,25 @@ class UserSeeder extends Seeder
             'siteCode'      => $site['site_code']
         ]);
 
-        // $admin->sites()->attach($site, [
-        //     'access_id' => $monitoringAccess['id'],
-        //     'userName'  => $admin['name'],
-        //     'siteCode'  => $site['site_code'],
-        //     'accessName' => $monitoringAccess['name']
-        // ]);
+        $admin->sites()->attach($site, [
+            'access_id' => $monitoringAccess['id'],
+            'userName'  => $admin['name'],
+            'siteCode'  => $site['site_code'],
+            'accessName' => $monitoringAccess['name']
+        ]);
 
-        // $admin->sites()->attach($site, [
-        //     'access_id' => $controlAccess['id'],
-        //     'userName'  => $admin['name'],
-        //     'siteCode'  => $site['site_code'],
-        //     'accessName' => $controlAccess['name']
-        // ]);
+        $admin->sites()->attach($site, [
+            'access_id' => $controlAccess['id'],
+            'userName'  => $admin['name'],
+            'siteCode'  => $site['site_code'],
+            'accessName' => $controlAccess['name']
+        ]);
 
-        //  $admin->sites()->attach($site, [
-        //     'access_id' => $subscribeAccess['id'],
-        //     'userName'  => $admin['name'],
-        //     'siteCode'  => $site['site_code'],
-        //     'accessName' => $subscribeAccess['name']
-        // ]);
+         $admin->sites()->attach($site, [
+            'access_id' => $subscribeAccess['id'],
+            'userName'  => $admin['name'],
+            'siteCode'  => $site['site_code'],
+            'accessName' => $subscribeAccess['name']
+        ]);
     }
 }

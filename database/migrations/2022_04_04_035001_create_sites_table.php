@@ -25,6 +25,7 @@ class CreateSitesTable extends Migration
             $table->string('completemonth');
             $table->string('completeday');
             $table->string('capacity');
+            $table->string('initialDate');
             $table->string('no_mastercontroller');
             $table->string('no_inverter');
             $table->string('lat');

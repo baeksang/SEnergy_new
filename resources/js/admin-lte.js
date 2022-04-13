@@ -17,6 +17,7 @@ try {
     require('admin-lte/plugins/bs-stepper/js/bs-stepper.js')
     require('admin-lte/plugins/select2/js/select2.js')
     require('admin-lte/plugins/bootstrap-switch/js/bootstrap-switch.js')
+    require('admin-lte/plugins/sweetalert2/sweetalert2.all.js')
 
     require('admin-lte')
 } catch (e) {}

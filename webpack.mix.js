@@ -25,21 +25,7 @@ mix.js('resources/js/admin-lte.js', 'public/js')
 //     'public/css'
 // )
 
-mix.extract(
-    [
-        // 'admin-lte',
-
-        // 'axios',
-        // 'bootstrap-sass',
-        // 'fastclick',
-        'jquery',
-        'bootstrap',
-        // 'jquery-slimscroll',
-        'lodash'
-        // 'vue'
-    ],
-    'public/js/vendor.js'
-)
+mix.extract(['jquery', 'bootstrap', 'lodash'], 'public/js/vendor.js')
 
 mix.version()
 

@@ -238,6 +238,31 @@
                                         </select>
                                     </div>
 
+                                    <div class="form-group" id="userAccess">
+                                        <label>현장</label>
+                                        <div class="card-body p-0">
+                                            <table class="table table-striped projects text-nowrap nowrap responsive"
+                                                id="userEditTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 20%">@lang('public.Site')
+                                                        </th>
+                                                        <th style="width: 20%">
+                                                            @lang('public.Region')</th>
+                                                        {{-- <th style="width: 20%">
+                                                            @lang('public.SiteCode')</th> --}}
+                                                        <th style="width: 50%" class="text-center">
+                                                            @lang('public.Role')</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
 
 
                                 </div>
@@ -267,6 +292,7 @@
         var userLevel = {!! json_encode($userLevel) !!};
         var userRegions = {!! json_encode($userRegions) !!};
         var modifiable = {!! json_encode($modifiable) !!};
+        var accesses = {!! json_encode($accesses) !!};
     </script>
     <script src="{{ mix('js/user.js') }}"></script>
 @endsection
