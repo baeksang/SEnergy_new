@@ -51,20 +51,15 @@
                                         {{-- @can('admin') --}}
 
                                         <li class="list-group-item">
-                                            <b><label>@lang('public.Approval')</label></b>
-                                            @if ($loginUserRole == 'admin')
-                                                <a class="float-right"><input type="checkbox" name="approvalCheckbox"
-                                                        data-bootstrap-switch-1 data-on-text="승인" data-off-text="대기"
-                                                        style="display: block"></a>
-                                            @else
-                                                <a class="float-right" id="userApprovalStatus">
-                                                    @if ($user['approved'] == 1)
-                                                        승인
-                                                    @else
-                                                        대기
-                                                    @endif
-                                                </a>
-                                            @endif
+                                            {{-- <b><label>@lang('public.Approval')</label></b> --}}
+                                            <b><label>승인여부</label></b>
+                                            <a class="float-right" id="userApprovalStatus">
+                                                @if ($user['approved'] == 1)
+                                                    승인
+                                                @else
+                                                    대기
+                                                @endif
+                                            </a>
                                         </li>
                                         {{-- @endcan --}}
                                         <li class="list-group-item">
@@ -138,10 +133,6 @@
                                                                     @else
                                                                         <td class="project-state"></td>
                                                                     @endif
-
-                                                                    {{-- <td class="project-state"><span class="badge badge-success">M</span></td>
-                                  <td class="project-state"><span class="badge badge-success">S</span></td>
-                                  <td class="project-state"><span class="badge badge-success">C</span></td> --}}
                                                                 </tr>
                                                             @endforeach
                                                         </tbody>
@@ -176,16 +167,27 @@
                 <div class="modal-body overflow-hidden">
                     {{-- <P>bla bla</P> --}}
                     <div class="card card-primary">
-                        <form action="">
+                        <form method="POST" action="{{ route('admin.users.update', $user) }}">
+                            @csrf
+                            {{ method_field('PUT') }}
                             @can('admin')
                                 @if ($modifiable == true)
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>@lang('public.Approval')</label>
-                                                <a class="float-right"><input type="checkbox" name="approvalCheckbox"
-                                                        data-bootstrap-switch data-on-text="승인" data-off-text="대기"
-                                                        style="display: none"></a>
+                                                {{-- <label>@lang('public.Approval')</label> --}}
+                                                <label>승인여부</label>
+                                                <a class="float-right">
+                                                    @if ($user['approved'] != 1)
+                                                        <input type="checkbox" id="userApprovalChx" name="approvalCheckbox"
+                                                            data-bootstrap-switch data-on-text="승인" data-off-text="대기"
+                                                            data-backdrop="static" data-keyboard="false" />
+                                                    @else
+                                                        <input type="checkbox" id="userApprovalChx" name="approvalCheckbox"
+                                                            data-bootstrap-switch data-on-text="승인" data-off-text="대기"
+                                                            data-backdrop="static" data-keyboard="false" checked />
+                                                    @endif
+                                                </a>
                                             </div>
                                             <!-- /.form-group -->
                                         </div>
@@ -194,8 +196,6 @@
                                     <!-- /.row -->
                                 @endif
                             @endcan
-
-
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -210,8 +210,6 @@
                                             @endif
                                         </select>
                                     </div>
-
-                                    {{-- <div class="form-group" id="userLevel" style="display: none"> --}}
                                     <div class="form-group" id="userLevel">
                                         <label>@lang('public.Level')</label>
                                         <select name="levels[]" id="select-level" class="select2_level" multiple="multiple"
@@ -224,7 +222,6 @@
                                             @endif
                                         </select>
                                     </div>
-
                                     <div class="form-group" id="userRegion">
                                         <label>@lang('public.Region')</label>
                                         <select name="regions[]" id="select-region" class="select2_region"
@@ -237,50 +234,52 @@
                                             @endif
                                         </select>
                                     </div>
-
-                                    <div class="form-group" id="userAccess">
+                                    <div class="form-group" id="userAccess" style="display: none">
                                         <label>현장</label>
                                         <div class="card-body p-0">
-                                            <table class="table table-striped projects text-nowrap nowrap responsive"
+                                            <table class="table table-striped projects text-nowrap nowrap"
                                                 id="userEditTable">
                                                 <thead>
-                                                    <tr>
-                                                        <th style="width: 20%">@lang('public.Site')
-                                                        </th>
-                                                        <th style="width: 20%">
-                                                            @lang('public.Region')</th>
-                                                        {{-- <th style="width: 20%">
-                                                            @lang('public.SiteCode')</th> --}}
-                                                        <th style="width: 50%" class="text-center">
-                                                            @lang('public.Role')</th>
-
-                                                    </tr>
                                                 </thead>
                                                 <tbody>
-
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
-
-
-
                                 </div>
                                 <!-- /.col -->
                             </div>
                             <div class="card-footer">
                                 @lang('public.You_must_select_one_role_at_least')
                             </div>
-
-
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-danger text-uppercase modalCloseBtn"
                                     style="letter-spacing: 0.1em;">취소</button>
-                                <button type="button" class="btn btn-info text-uppercase"
+                                <button type="submit" class="btn btn-info text-uppercase"
                                     style="letter-spacing: 0.1em;">수정</button>
                             </div>
                         </form>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Confirmation</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to change this?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Confirm</button>
                 </div>
             </div>
         </div>

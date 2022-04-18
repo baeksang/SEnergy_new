@@ -201,6 +201,14 @@ class UsersController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $this->validate($request, [
+            "approvalCheckbox" => 'required',
+            "roles" => 'required',
+        ]);
+
+        return back();
+        dump($id);
+        dd($request);
     }
 
     /**
