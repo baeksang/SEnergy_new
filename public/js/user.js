@@ -664,7 +664,9 @@ $(document).on('change', '#select-role', function (e) {
   } else {
     resetLevel();
     resetRegion();
-  }
+  } // $('#select-level').prop("readonly", R_ACTIVATION)
+  // $('#select-region').prop("readonly", R_ACTIVATION)
+
 
   $('#select-level').prop("disabled", R_ACTIVATION);
   $('#select-region').prop("disabled", R_ACTIVATION);
